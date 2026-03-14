@@ -1,6 +1,7 @@
 # ProbeRoute
 
 [![Paper PDF](https://img.shields.io/badge/Paper-PDF-B31B1B.svg)](https://github.com/aliuyar1234/proberoute/raw/main/ProbeRoute_paper.pdf)
+[![DOI](https://zenodo.org/badge/1181792664.svg)](https://doi.org/10.5281/zenodo.19022709)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.9-ee4c2c.svg)](https://pytorch.org/)
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](ENVIRONMENT.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
@@ -36,6 +37,12 @@ If you only read a few files, read these:
 - [ENVIRONMENT.md](ENVIRONMENT.md)
 - [DATA_SPEC.md](DATA_SPEC.md)
 - [RESULTS_SCHEMA.md](RESULTS_SCHEMA.md)
+
+## Citation
+If you use ProbeRoute in research, please cite the repository via the GitHub citation panel or the Zenodo DOI:
+
+- DOI: `10.5281/zenodo.19022709`
+- Citation metadata: [CITATION.cff](CITATION.cff)
 
 ## Quick Start
 Create an environment:
