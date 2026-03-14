@@ -10,6 +10,7 @@ __pycache__/
 
 .tmp*/
 tmp/
+requirements-lock.txt
 
 _archive/
 logs/

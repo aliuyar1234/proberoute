@@ -17,7 +17,6 @@ env:
 	$(VENV_PYTHON) -m pip install --upgrade -r requirements-torch-cu128.txt
 	$(VENV_PYTHON) -m pip install -r requirements.txt
 	$(VENV_PYTHON) -m pip install -r requirements-dev.txt
-	$(VENV_PYTHON) -m pip freeze > requirements-lock.txt
 	$(VENV_PYTHON) -c "import platform; print(f'python={platform.python_version()}')"
 	$(VENV_PYTHON) -c "import torch; print(f'torch={torch.__version__} cuda={torch.version.cuda} available={torch.cuda.is_available()}')"
 

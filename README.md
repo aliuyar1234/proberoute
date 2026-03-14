@@ -1,54 +1,108 @@
 # LayerMix-MTP
 
-LayerMix-MTP is a research codebase for adapting frozen autoregressive language models to multi-token prediction via probe-informed routing over hidden states.
+LayerMix-MTP studies a focused question in frozen-backbone language model adaptation: can future-token probes be turned into a useful routing prior for multi-token prediction?
 
-This public repo is intentionally slim. It keeps the implementation, stable design docs, configs, tests, and paper-generation templates needed to understand or reproduce the system structure. Runtime artifacts, private handoff notes, transient project-management docs, and generated experiment outputs are excluded from version control.
+This repository implements a full research pipeline around that idea. The method probes horizon-specific signal across transformer depth, uses those probe scores to initialize sparse layer routing, and trains lightweight multi-token heads on top of a frozen pretrained backbone.
 
-## What This Repo Contains
-- `src/`: training, evaluation, analysis, and CLI code
-- `configs/`: canonical experiment entrypoints
-- `tests/`: unit and integration coverage
-- `fixtures/`: offline smoke-test assets
+## Why This Repo Exists
+- To test whether probe-informed sparse routing can outperform simpler frozen-backbone baselines for multi-token prediction.
+- To provide a reproducible implementation of the full workflow: data preparation, probe training, MTP training, evaluation, registry assembly, and paper-asset generation.
+- To keep the public codebase clean and useful: implementation, configs, tests, and stable design docs are versioned; runtime outputs and internal project-management material are not.
+
+## What Is In Scope
+- frozen-backbone multi-token prediction
+- probe sweeps over hidden-state depth
+- dense and sparse layer-mixing baselines
+- evaluation, result registries, and paper asset generation
+
+## What Is Not Shipped Here
+- pretrained model weights
+- dataset payloads
+- local run outputs
+- generated paper drafts
+- session handoff and internal adjudication notes
+
+## Repository Layout
+- `src/`: implementation code
+- `configs/`: experiment entrypoints
+- `tests/`: unit and integration tests
+- `fixtures/`: offline smoke-test data
 - `schemas/`: result and manifest schemas
-- `MODULE_SPECS/`: module-level design guardrails
-- `PAPER_TEMPLATES/`: paper-writing templates used by the writing pipeline
+- `MODULE_SPECS/`: contributor-facing module contracts
+- `PAPER_TEMPLATES/`: manuscript templates and paper asset specs
 
-## Stable Design Docs
-These docs remain in the public repo because they help keep implementation and build behavior aligned with the intended design:
+## Reader's Guide
+If you only read a few files, read these:
+- [README.md](README.md)
 - [ARCHITECTURE.md](ARCHITECTURE.md)
-- [BUILD_INTERFACE.md](BUILD_INTERFACE.md)
-- [DATA_SPEC.md](DATA_SPEC.md)
 - [ENVIRONMENT.md](ENVIRONMENT.md)
+- [DATA_SPEC.md](DATA_SPEC.md)
 - [RESULTS_SCHEMA.md](RESULTS_SCHEMA.md)
-- [VALIDATION_AND_TESTING.md](VALIDATION_AND_TESTING.md)
-- [LICENSE_AND_COMPLIANCE.md](LICENSE_AND_COMPLIANCE.md)
 
 ## Quick Start
-1. Create the environment:
-   `make env`
-2. Run the offline smoke path:
-   `make smoke`
-3. Run tests:
-   `make test`
+Create an environment:
 
-## Main CLI Workflow
-- Prepare data:
-  `python -m src.cli.prepare_data --config configs/probe_1b.yaml`
-- Train probes:
-  `python -m src.cli.train_probes --config configs/probe_1b.yaml`
-- Train MTP runs:
-  `python -m src.cli.train_mtp --config configs/screen_sparse_probe_init_1b.yaml`
-- Evaluate a finished run:
-  `python -m src.cli.evaluate --run-dir <run_dir>`
-- Assemble registries:
-  `python -m src.cli.collect_results --outputs-root outputs`
-- Build paper assets:
-  `python -m src.cli.build_paper_assets --outputs-root outputs`
-- Write a draft paper:
-  `python -m src.cli.write_paper --outputs-root outputs --template PAPER_TEMPLATES/PAPER_TEMPLATE.md`
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python -m pip install --upgrade pip setuptools wheel
+.\.venv\Scripts\python -m pip install --upgrade -r requirements-torch-cu128.txt
+.\.venv\Scripts\python -m pip install -r requirements.txt
+.\.venv\Scripts\python -m pip install -r requirements-dev.txt
+```
 
-## Public Repo Policy
-- Model weights and datasets are not bundled.
-- Generated outputs under `outputs/` are not tracked.
-- Session handoff docs, transient planning notes, and internal operational material are intentionally kept out of the public git surface.
-- The public repo is for clean implementation, validation, and reproducible structure, not for shipping local runtime state.
+Run the offline smoke path:
+
+```powershell
+python -m src.cli.prepare_data --config configs/smoke_local_tiny.yaml
+python -m src.cli.train_probes --config configs/smoke_local_tiny.yaml
+python -m src.cli.train_mtp --config configs/smoke_local_tiny.yaml
+python -m src.cli.evaluate --run-dir outputs/runs/SMOKE_LOCAL_TINY/local-toy-gpt/seed_1337
+```
+
+Run tests:
+
+```powershell
+python -m pytest tests/unit tests/integration
+```
+
+## Main Commands
+Train probes:
+
+```powershell
+python -m src.cli.train_probes --config configs/probe_1b.yaml
+```
+
+Train an MTP run:
+
+```powershell
+python -m src.cli.train_mtp --config configs/screen_sparse_probe_init_1b.yaml
+```
+
+Evaluate a finished run:
+
+```powershell
+python -m src.cli.evaluate --run-dir <run_dir>
+```
+
+Assemble registries:
+
+```powershell
+python -m src.cli.collect_results --outputs-root outputs
+```
+
+Build paper assets:
+
+```powershell
+python -m src.cli.build_paper_assets --outputs-root outputs
+```
+
+Write a draft from artifacts:
+
+```powershell
+python -m src.cli.write_paper --outputs-root outputs --template PAPER_TEMPLATES/PAPER_TEMPLATE.md
+```
+
+## Notes On Reproducibility
+- The canonical runtime is a local `.venv`.
+- Generated outputs live under `outputs/` and are intentionally not versioned in this public repository.
+- The public repository is meant to expose clean code and reproducible structure, not local experiment state.

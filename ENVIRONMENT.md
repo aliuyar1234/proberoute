@@ -36,7 +36,6 @@ python -m venv .venv
 .\.venv\Scripts\python -m pip install --upgrade -r requirements-torch-cu128.txt
 .\.venv\Scripts\python -m pip install -r requirements.txt
 .\.venv\Scripts\python -m pip install -r requirements-dev.txt
-.\.venv\Scripts\python -m pip freeze > requirements-lock.txt
 ```
 
 ## Canonical package surface

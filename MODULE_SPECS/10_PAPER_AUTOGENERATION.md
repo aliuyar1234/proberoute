@@ -25,7 +25,7 @@ Primary sources:
 
 1. Write the paper only after registries exist.
 2. Pull numbers from registries or metric JSONs, never from terminal logs.
-3. Use the title dictated by `CLAIM_CRITERIA.md`.
+3. Use only claim wording that is supported by the produced evidence and paper asset bundle.
 4. Reflect actual deviations from the original plan.
 5. The final paper may not contain unresolved placeholders.
 
