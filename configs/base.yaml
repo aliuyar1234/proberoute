@@ -1,5 +1,5 @@
 project:
-  name: layermix_mtp
+  name: proberoute
   exp_id: BASE_TEMPLATE
   stage: template
   priority: none

@@ -1,5 +1,5 @@
 project:
-  name: layermix_mtp
+  name: proberoute
   exp_id: SYNTH_STARGRAPH_PROBE
   stage: optional
   priority: optional

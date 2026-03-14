@@ -1,5 +1,5 @@
 project:
-  name: layermix_mtp
+  name: proberoute
   exp_id: SMOKE_LOCAL_TINY
   stage: smoke
   priority: must

@@ -1,2 +1,1 @@
-"""Core utilities for LayerMix-MTP."""
-
+"""Core utilities for ProbeRoute."""

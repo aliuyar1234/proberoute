@@ -32,7 +32,7 @@ def write_paper(outputs_root: Path, template_path: Path) -> Path:
     paper_dir.mkdir(parents=True, exist_ok=True)
     claim_matrix = outputs_root / "paper_assets" / "appendix" / "claim_evidence_matrix.md"
     _validate_claim_matrix(claim_matrix, outputs_root)
-    title = "LayerMix-MTP Progress Report"
+    title = "ProbeRoute Progress Report"
     abstract = "This draft is generated from the current artifact set and should be refined as mandatory runs complete."
     template = template_path.read_text(encoding="utf-8")
     content = template.replace("{TITLE}", title).replace("{ABSTRACT}", abstract)

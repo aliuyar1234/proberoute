@@ -4,7 +4,7 @@ project:
   exp_id: MAIN_SPARSE_PROBE_1B_FINAL
   stage: final
   priority: must
-  notes: "Mandatory final-budget rerun of the main LayerMix-MTP method."
+  notes: "Mandatory final-budget rerun of the main ProbeRoute method."
 
 model:
   backbone_name: EleutherAI/pythia-1b

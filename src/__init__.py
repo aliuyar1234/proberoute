@@ -1,2 +1,1 @@
-"""LayerMix-MTP implementation scaffold."""
-
+"""ProbeRoute implementation scaffold."""

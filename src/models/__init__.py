@@ -1,2 +1,1 @@
-"""Model components for LayerMix-MTP."""
-
+"""Model components for ProbeRoute."""

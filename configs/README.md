@@ -1,6 +1,6 @@
 # Configs
 
-These YAML files are the canonical public execution entrypoints for LayerMix-MTP.
+These YAML files are the canonical public execution entrypoints for ProbeRoute.
 
 ## Merge Rules
 - `inherit_from` paths are resolved relative to the child file.

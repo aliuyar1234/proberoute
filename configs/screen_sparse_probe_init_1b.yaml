@@ -4,7 +4,7 @@ project:
   exp_id: MAIN_SPARSE_PROBE_1B
   stage: screen
   priority: must
-  notes: "Mandatory screening version of the main LayerMix-MTP method."
+  notes: "Mandatory screening version of the main ProbeRoute method."
 
 model:
   backbone_name: EleutherAI/pythia-1b

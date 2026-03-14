@@ -1,8 +1,8 @@
-# LayerMix-MTP
+# ProbeRoute
 
-LayerMix-MTP studies a focused question in frozen-backbone language model adaptation: can future-token probes be turned into a useful routing prior for multi-token prediction?
+ProbeRoute studies a focused question in frozen-backbone language model adaptation: can future-token probes be turned into a useful routing prior for multi-token prediction?
 
-This repository implements a full research pipeline around that idea. The method probes horizon-specific signal across transformer depth, uses those probe scores to initialize sparse layer routing, and trains lightweight multi-token heads on top of a frozen pretrained backbone.
+This repository implements a full research pipeline around that idea. The ProbeRoute method probes horizon-specific signal across transformer depth, uses those probe scores to initialize sparse layer routing, and trains lightweight multi-token heads on top of a frozen pretrained backbone.
 
 ## Why This Repo Exists
 - To test whether probe-informed sparse routing can outperform simpler frozen-backbone baselines for multi-token prediction.
