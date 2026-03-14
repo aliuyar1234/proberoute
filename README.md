@@ -1,5 +1,10 @@
 # ProbeRoute
 
+[![CI](https://img.shields.io/github/actions/workflow/status/aliuyar1234/proberoute/ci.yml?branch=main&label=CI)](https://github.com/aliuyar1234/proberoute/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](ENVIRONMENT.md)
+[![Paper PDF](https://img.shields.io/badge/Paper-PDF-B31B1B.svg)](https://github.com/aliuyar1234/proberoute/raw/main/ProbeRoute_paper.pdf)
+
 ProbeRoute studies a focused question in frozen-backbone language model adaptation: can future-token probes be turned into a useful routing prior for multi-token prediction?
 
 This repository implements a full research pipeline around that idea. The ProbeRoute method probes horizon-specific signal across transformer depth, uses those probe scores to initialize sparse layer routing, and trains lightweight multi-token heads on top of a frozen pretrained backbone.

@@ -18,6 +18,8 @@ docs/
 outputs/
 
 paper/paper_draft.md
+paper/incoming_latex/
+paper/*.zip
 paper/figures/*
 !paper/figures/.gitkeep
 paper/tables/*
