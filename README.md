@@ -1,9 +1,9 @@
 # ProbeRoute
 
-[![CI](https://img.shields.io/github/actions/workflow/status/aliuyar1234/proberoute/ci.yml?branch=main&label=CI)](https://github.com/aliuyar1234/proberoute/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Python 3.12](https://img.shields.io/badge/Python-3.12-blue.svg)](ENVIRONMENT.md)
 [![Paper PDF](https://img.shields.io/badge/Paper-PDF-B31B1B.svg)](https://github.com/aliuyar1234/proberoute/raw/main/ProbeRoute_paper.pdf)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.9-ee4c2c.svg)](https://pytorch.org/)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](ENVIRONMENT.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
 
 ProbeRoute studies a focused question in frozen-backbone language model adaptation: can future-token probes be turned into a useful routing prior for multi-token prediction?
 
