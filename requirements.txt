@@ -1,0 +1,12 @@
+accelerate>=0.34,<1.1
+datasets>=2.20,<3.1
+jsonschema>=4.23.0
+matplotlib>=3.8.0
+numpy>=1.26.0
+pandas>=2.2,<3
+PyYAML>=6.0.2
+safetensors>=0.4.5,<0.6
+# Install the CUDA wheel first via `requirements-torch-cu128.txt`.
+torch==2.9.1+cu128
+tqdm>=4.66,<5
+transformers>=4.45,<4.50

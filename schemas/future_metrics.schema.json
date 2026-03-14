@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FutureMetrics",
+  "type": "object",
+  "required": [
+    "exp_id",
+    "split",
+    "num_sequences",
+    "horizons",
+    "metrics_by_horizon",
+    "aggregate_metrics",
+    "evaluation_seed"
+  ],
+  "properties": {
+    "exp_id": {"type": "string"},
+    "split": {"type": "string", "enum": ["val", "test"]},
+    "num_sequences": {"type": "integer", "minimum": 1},
+    "horizons": {"type": "array", "items": {"type": "integer", "minimum": 1}},
+    "metrics_by_horizon": {"type": "object"},
+    "aggregate_metrics": {"type": "object"},
+    "bootstrap_ci": {"type": ["object", "null"]},
+    "evaluation_seed": {"type": "integer"}
+  },
+  "additionalProperties": true
+}

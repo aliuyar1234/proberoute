@@ -1,0 +1,19 @@
+inherit_from: base.yaml
+
+project:
+  exp_id: FALLBACK_48GB_TEMPLATE
+  stage: template
+  priority: none
+  notes: "48GB fallback overlay; use only when the preferred 96GB path is unavailable."
+
+hardware:
+  expected_vram_gb: 48
+  micro_batch_size: 1
+  grad_accum: 64
+
+data:
+  seq_len: 1024
+
+train:
+  eval_every_steps: 750
+  save_every_steps: 1500

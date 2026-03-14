@@ -1,0 +1,14 @@
+inherit_from: base.yaml
+
+project:
+  exp_id: BASE_LAST_MLP_1B
+  stage: screen
+  priority: must
+  notes: "Mandatory stronger screening baseline: final-layer residual MLP heads."
+
+model:
+  backbone_name: EleutherAI/pythia-1b
+  layer_mix_mode: last_layer
+  router_init_mode: none
+  head_type: residual_mlp
+  top_m: 1

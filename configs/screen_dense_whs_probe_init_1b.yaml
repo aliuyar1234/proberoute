@@ -1,0 +1,14 @@
+inherit_from: base.yaml
+
+project:
+  exp_id: BASE_DENSE_WHS_PROBE_1B
+  stage: screen
+  priority: must
+  notes: "Mandatory dense weighted-hidden-state baseline with probe-based router initialization."
+
+model:
+  backbone_name: EleutherAI/pythia-1b
+  layer_mix_mode: dense_whs
+  router_init_mode: probe_zscore_top5
+  head_type: residual_mlp
+  top_m: 4

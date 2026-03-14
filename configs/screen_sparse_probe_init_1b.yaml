@@ -1,0 +1,14 @@
+inherit_from: base.yaml
+
+project:
+  exp_id: MAIN_SPARSE_PROBE_1B
+  stage: screen
+  priority: must
+  notes: "Mandatory screening version of the main LayerMix-MTP method."
+
+model:
+  backbone_name: EleutherAI/pythia-1b
+  layer_mix_mode: sparse_topm
+  router_init_mode: probe_zscore_top5
+  head_type: residual_mlp
+  top_m: 4

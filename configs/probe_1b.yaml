@@ -1,0 +1,27 @@
+inherit_from: base.yaml
+
+project:
+  exp_id: PROBE_1B
+  stage: probe
+  priority: must
+  notes: "Mandatory 1B probe run for the main-scale heatmap and probe-init artefacts."
+
+hardware:
+  micro_batch_size: 2
+  grad_accum: 32
+
+data:
+  tokenizer_name: EleutherAI/pythia-1b
+  seq_len: 1024
+  train_token_quota: 5000000
+  val_token_quota: 1000000
+  test_token_quota: 1000000
+
+model:
+  backbone_name: EleutherAI/pythia-1b
+  layer_mix_mode: sparse_topm
+  router_init_mode: none
+
+train:
+  eval_every_steps: 250
+  save_every_steps: 500

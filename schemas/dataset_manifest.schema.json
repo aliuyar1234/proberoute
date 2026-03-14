@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DatasetManifest",
+  "type": "object",
+  "required": [
+    "dataset_name",
+    "dataset_config",
+    "tokenizer_name",
+    "dataset_id",
+    "seq_len",
+    "split_policy",
+    "normalization_policy",
+    "token_counts_by_split",
+    "sequence_counts_by_split",
+    "requested_token_quotas_by_split",
+    "realized_token_counts_by_split",
+    "dropped_tail_tokens_by_split",
+    "eval_future_sequence_count",
+    "eval_acceptance_prefix_count",
+    "creation_timestamp"
+  ],
+  "properties": {
+    "dataset_name": {"type": "string"},
+    "dataset_config": {"type": ["string", "null"]},
+    "tokenizer_name": {"type": "string"},
+    "tokenizer_revision": {"type": ["string", "null"]},
+    "dataset_id": {"type": "string"},
+    "seq_len": {"type": "integer", "minimum": 2},
+    "split_policy": {"type": "object"},
+    "normalization_policy": {"type": "object"},
+    "token_counts_by_split": {"type": "object"},
+    "sequence_counts_by_split": {"type": "object"},
+    "requested_token_quotas_by_split": {"type": "object"},
+    "realized_token_counts_by_split": {"type": "object"},
+    "dropped_tail_tokens_by_split": {"type": "object"},
+    "eval_future_sequence_count": {"type": "integer", "minimum": 1},
+    "eval_acceptance_prefix_count": {"type": "integer", "minimum": 1},
+    "eval_future_sequence_count_by_split": {"type": "object"},
+    "eval_acceptance_prefix_count_by_split": {"type": "object"},
+    "creation_timestamp": {"type": "string"}
+  },
+  "additionalProperties": true
+}

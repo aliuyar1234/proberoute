@@ -1,0 +1,23 @@
+inherit_from: base.yaml
+
+project:
+  exp_id: MAIN_SPARSE_PROBE_1B_FINAL
+  stage: final
+  priority: must
+  notes: "Mandatory final-budget rerun of the main LayerMix-MTP method."
+
+model:
+  backbone_name: EleutherAI/pythia-1b
+  layer_mix_mode: sparse_topm
+  router_init_mode: probe_zscore_top5
+  head_type: residual_mlp
+  top_m: 4
+
+data:
+  train_token_quota: 50000000
+  val_token_quota: 5000000
+  test_token_quota: 5000000
+
+train:
+  eval_every_steps: 1000
+  save_every_steps: 2000

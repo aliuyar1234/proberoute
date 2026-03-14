@@ -1,0 +1,3 @@
+# Abstract Template
+
+We study whether pretrained next-token language models can be adapted to explicit multi-token prediction more effectively by reading from the right internal depth bands for each future horizon. We first measure layer × horizon future-token predictability with lightweight probes, then propose {METHOD_NAME}, a frozen-backbone adaptation method that uses {KEY_IDEA}. Across {MODELS} and deterministic token-budgeted runs on {DATASET}, we compare against {BASELINES}. We find that {RESULT_SUMMARY}. These results suggest that {INTERPRETATION}. Our study is limited by {LIMITATIONS}.

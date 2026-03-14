@@ -1,0 +1,20 @@
+{"text": "alpha beta gamma delta epsilon zeta eta theta iota kappa"}
+{"text": "the quick brown fox jumps over the lazy dog twice in daylight"}
+{"text": "multi token prediction can expose useful future signal in hidden states"}
+{"text": "layer routing should prefer different depth bands for different horizons"}
+{"text": "deterministic smoke tests prevent expensive debugging later in the project"}
+{"text": "sparse routers keep only a small active set of layers for each horizon"}
+{"text": "dense mixtures may average incompatible semantic representations together"}
+{"text": "probe heatmaps can reveal whether future information is already present"}
+{"text": "a local toy backbone is enough to validate config parsing and tensor shapes"}
+{"text": "evaluation must record future metrics acceptance metrics and router metrics"}
+{"text": "every result should be tied to a run manifest and resolved config file"}
+{"text": "careful selection rules avoid paper drift and accidental cherry picking"}
+{"text": "negative results are still useful when they are well validated and explained"}
+{"text": "the acceptance proxy advances by exactly one base greedy token each step"}
+{"text": "stateless layer norm is the canonical hidden state normalization here"}
+{"text": "warmup schedules may help harder future horizons stabilize during training"}
+{"text": "a confirmatory run can be smaller if the main budget is tight"}
+{"text": "plots and tables must always come from canonical registries not terminal logs"}
+{"text": "the final paper should contain only evidence backed by saved artifacts"}
+{"text": "codex should follow the package literally and log any necessary assumptions"}

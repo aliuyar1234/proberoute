@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AcceptanceMetrics",
+  "type": "object",
+  "required": [
+    "exp_id",
+    "num_prefixes",
+    "max_horizon",
+    "max_new_tokens",
+    "prefix_len",
+    "greedy_policy",
+    "advance_policy",
+    "mean_accept_len",
+    "evaluation_seed",
+    "trace_path"
+  ],
+  "properties": {
+    "exp_id": {"type": "string"},
+    "num_prefixes": {"type": "integer", "minimum": 1},
+    "max_horizon": {"type": "integer", "minimum": 1},
+    "max_new_tokens": {"type": "integer", "minimum": 1},
+    "prefix_len": {"type": "integer", "minimum": 1},
+    "greedy_policy": {"type": "string", "enum": ["argmax"]},
+    "advance_policy": {"type": "string", "enum": ["append_one_base_greedy_token"]},
+    "mean_accept_len": {"type": "number"},
+    "accept_rate_depth_1": {"type": "number"},
+    "accept_rate_depth_2": {"type": "number"},
+    "accept_rate_depth_3": {"type": "number"},
+    "accept_rate_depth_4": {"type": "number"},
+    "accept_len_histogram": {"type": ["object", "array"]},
+    "bootstrap_ci": {"type": ["object", "null"]},
+    "evaluation_seed": {"type": "integer"},
+    "trace_path": {"type": "string"}
+  },
+  "additionalProperties": true
+}

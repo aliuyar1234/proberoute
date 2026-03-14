@@ -1,0 +1,14 @@
+inherit_from: synthetic_stargraph_probe.yaml
+
+project:
+  exp_id: SYNTH_STARGRAPH
+  stage: optional
+  priority: optional
+  notes: "Optional synthetic MTP experiment on the star-graph dataset."
+
+model:
+  router_init_mode: probe_zscore_top5
+
+train:
+  eval_every_steps: 250
+  save_every_steps: 500

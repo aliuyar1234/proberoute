@@ -1,0 +1,16 @@
+# Historical filename retained for continuity. The authoritative stage is `ablation`.
+
+inherit_from: base.yaml
+
+project:
+  exp_id: ABL_SPARSE_RANDOM_1B
+  stage: ablation
+  priority: should
+  notes: "Sparse router ablation with random initialization; screening budget only."
+
+model:
+  backbone_name: EleutherAI/pythia-1b
+  layer_mix_mode: sparse_topm
+  router_init_mode: random
+  head_type: residual_mlp
+  top_m: 4

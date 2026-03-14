@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "layermix-mtp"
+version = "0.1.0"
+description = "Offline-first scaffold for the LayerMix-MTP research pipeline."
+requires-python = ">=3.11"
+dependencies = [
+  "accelerate>=0.34,<1.1",
+  "datasets>=2.20,<3.1",
+  "jsonschema>=4.23.0",
+  "matplotlib>=3.8.0",
+  "numpy>=1.26.0",
+  "pandas>=2.2,<3",
+  "PyYAML>=6.0.2",
+  "safetensors>=0.4.5,<0.6",
+  # The canonical workstation env installs this CUDA wheel explicitly via Makefile/requirements-torch-cu128.txt.
+  "torch==2.9.1+cu128",
+  "tqdm>=4.66,<5",
+  "transformers>=4.45,<4.50",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.0",
+]
+
+[tool.setuptools]
+packages = [
+  "src",
+  "src.analysis",
+  "src.cli",
+  "src.core",
+  "src.data",
+  "src.eval",
+  "src.models",
+  "src.synthetic",
+  "src.testing",
+  "src.train",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

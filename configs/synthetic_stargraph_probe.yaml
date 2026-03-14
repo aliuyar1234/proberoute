@@ -1,0 +1,86 @@
+project:
+  name: layermix_mtp
+  exp_id: SYNTH_STARGRAPH_PROBE
+  stage: optional
+  priority: optional
+  seed: 1337
+  output_root: outputs
+  notes: "Optional synthetic probe run on the star-graph planning-sensitive dataset."
+
+hardware:
+  device: cuda
+  precision: bf16
+  expected_vram_gb: 96
+  allow_flash_attn: false
+  micro_batch_size: 8
+  grad_accum: 8
+
+data:
+  dataset_name: synthetic_stargraph
+  dataset_config: default
+  local_path: null
+  tokenizer_name: EleutherAI/pythia-410m
+  text_field_priority: [text]
+  split_modulus: 1000
+  split_ranges:
+    train: [40, 999]
+    val: [20, 39]
+    test: [0, 19]
+  seq_len: 256
+  train_token_quota: 1000000
+  val_token_quota: 200000
+  test_token_quota: 200000
+  processed_root: outputs/data/processed
+  append_eos_between_docs: true
+  drop_last_sequence: true
+
+model:
+  backbone_name: EleutherAI/pythia-410m
+  freeze_backbone: true
+  horizons: [1, 2, 3, 4]
+  layer_mix_mode: sparse_topm
+  router_init_mode: none
+  probe_init_metric: top5
+  head_type: residual_mlp
+  top_m: 4
+  router_temperature: 0.5
+  probe_rank: 64
+  hidden_expansion: 4
+  hidden_norm: stateless_layer_norm
+  entropy_penalty_beta: 0.001
+  use_deephead_for_far_horizons: false
+  deephead_horizons: [3, 4]
+
+train:
+  optimizer: adamw
+  stop_mode: token_budget
+  lr_head: 0.0003
+  lr_router: 0.001
+  lr_probe: 0.001
+  weight_decay: 0.01
+  warmup_ratio: 0.02
+  max_steps: null
+  eval_every_steps: 100
+  save_every_steps: 200
+  log_every_steps: 20
+  early_stop_patience: 3
+  grad_clip_norm: 1.0
+  loss_weights:
+    "1": 1.0
+    "2": 1.0
+    "3": 1.0
+    "4": 1.0
+  loss_warmup:
+    enabled: false
+    full_weight_fraction_by_horizon:
+      "2": 0.10
+      "3": 0.20
+      "4": 0.30
+
+eval:
+  future_metrics_sequence_count: 512
+  acceptance_prefix_count: 64
+  acceptance_prefix_len: 128
+  acceptance_max_new_tokens: 32
+  bootstrap_samples: 1000
+  bootstrap_seed: 2026

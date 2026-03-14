@@ -1,0 +1,29 @@
+inherit_from: base.yaml
+
+project:
+  exp_id: CONFIRM_BEST_410M_SEED2
+  stage: confirm
+  priority: should
+  seed: 2027
+  notes: "Low-cost confirmatory fallback: rerun the main sparse probe-init method at 410M with a second seed. Legacy exp_id retained for traceability; this is not a new baseline-selection step."
+
+hardware:
+  micro_batch_size: 4
+  grad_accum: 16
+
+data:
+  tokenizer_name: EleutherAI/pythia-410m
+  train_token_quota: 20000000
+  val_token_quota: 2000000
+  test_token_quota: 2000000
+
+model:
+  backbone_name: EleutherAI/pythia-410m
+  layer_mix_mode: sparse_topm
+  router_init_mode: probe_zscore_top5
+  head_type: residual_mlp
+  top_m: 4
+
+train:
+  eval_every_steps: 500
+  save_every_steps: 1000

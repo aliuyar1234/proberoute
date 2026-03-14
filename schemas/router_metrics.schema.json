@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RouterMetrics",
+  "type": "object",
+  "required": [
+    "exp_id",
+    "layer_mix_mode",
+    "horizons",
+    "top_m",
+    "entropy_by_horizon",
+    "selected_layers_by_horizon",
+    "average_weights_by_horizon"
+  ],
+  "properties": {
+    "exp_id": {"type": "string"},
+    "layer_mix_mode": {"type": "string", "enum": ["last_layer", "dense_whs", "sparse_topm"]},
+    "horizons": {"type": "array", "items": {"type": "integer", "minimum": 1}},
+    "top_m": {"type": "integer", "minimum": 1},
+    "entropy_by_horizon": {"type": "object"},
+    "selected_layers_by_horizon": {"type": "object"},
+    "average_weights_by_horizon": {"type": "object"},
+    "overlap_with_probe_topm_by_horizon": {"type": ["object", "null"]}
+  },
+  "additionalProperties": true
+}

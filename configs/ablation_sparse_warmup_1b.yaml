@@ -1,0 +1,15 @@
+inherit_from: screen_sparse_probe_init_1b.yaml
+
+project:
+  exp_id: ABL_SPARSE_WARMUP_1B
+  stage: ablation
+  priority: should
+  notes: "Screening-budget warmup ablation that ramps the far-horizon losses."
+
+train:
+  loss_warmup:
+    enabled: true
+    full_weight_fraction_by_horizon:
+      "2": 0.10
+      "3": 0.20
+      "4": 0.30

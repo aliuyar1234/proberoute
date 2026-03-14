@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FinalistSelection",
+  "type": "object",
+  "required": [
+    "selected_baseline_exp_id",
+    "selected_run_dir",
+    "selection_metric",
+    "selection_value",
+    "tie_break_trace",
+    "generated_config_path",
+    "source_screening_registry",
+    "creation_timestamp"
+  ],
+  "properties": {
+    "selected_baseline_exp_id": {"type": "string"},
+    "selected_run_dir": {"type": "string"},
+    "selection_metric": {"type": "string"},
+    "selection_value": {"type": "number"},
+    "selected_best_checkpoint_path": {"type": ["string", "null"]},
+    "tie_break_trace": {"type": ["array", "object"]},
+    "source_metrics": {"type": ["object", "null"]},
+    "checkpoint_used": {"type": ["string", "null"]},
+    "authoritative": {"type": ["boolean", "null"]},
+    "generated_config_path": {"type": "string"},
+    "source_screening_registry": {"type": "string"},
+    "creation_timestamp": {"type": "string"}
+  },
+  "additionalProperties": true
+}

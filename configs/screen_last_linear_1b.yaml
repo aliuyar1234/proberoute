@@ -1,0 +1,18 @@
+inherit_from: base.yaml
+
+project:
+  exp_id: BASE_LAST_LINEAR_1B
+  stage: screen
+  priority: must
+  notes: "Mandatory simplest screening baseline: final-layer linear heads only."
+
+model:
+  backbone_name: EleutherAI/pythia-1b
+  layer_mix_mode: last_layer
+  router_init_mode: none
+  head_type: linear
+  top_m: 1
+
+train:
+  eval_every_steps: 500
+  save_every_steps: 1000

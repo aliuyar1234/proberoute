@@ -1,0 +1,86 @@
+project:
+  name: layermix_mtp
+  exp_id: BASE_TEMPLATE
+  stage: template
+  priority: none
+  seed: 1337
+  output_root: outputs
+  notes: ""
+
+hardware:
+  device: cuda
+  precision: bf16
+  expected_vram_gb: 96
+  allow_flash_attn: true
+  micro_batch_size: 2
+  grad_accum: 32
+
+data:
+  dataset_name: HuggingFaceFW/fineweb-edu
+  dataset_config: sample-10BT
+  local_path: null
+  tokenizer_name: EleutherAI/pythia-1b
+  text_field_priority: [text, content, raw_content]
+  split_modulus: 1000
+  split_ranges:
+    train: [40, 999]
+    val: [20, 39]
+    test: [0, 19]
+  seq_len: 2048
+  train_token_quota: 20000000
+  val_token_quota: 2000000
+  test_token_quota: 2000000
+  processed_root: outputs/data/processed
+  append_eos_between_docs: true
+  drop_last_sequence: true
+
+model:
+  backbone_name: EleutherAI/pythia-1b
+  freeze_backbone: true
+  horizons: [1, 2, 3, 4]
+  layer_mix_mode: sparse_topm
+  router_init_mode: random
+  probe_init_metric: top5
+  head_type: residual_mlp
+  top_m: 4
+  router_temperature: 0.5
+  probe_rank: 64
+  hidden_expansion: 4
+  hidden_norm: stateless_layer_norm
+  entropy_penalty_beta: 0.001
+  use_deephead_for_far_horizons: false
+  deephead_horizons: [3, 4]
+
+train:
+  optimizer: adamw
+  stop_mode: token_budget
+  lr_head: 0.0003
+  lr_router: 0.001
+  lr_probe: 0.001
+  weight_decay: 0.01
+  warmup_ratio: 0.02
+  max_steps: null
+  eval_every_steps: 500
+  save_every_steps: 1000
+  log_every_steps: 50
+  early_stop_patience: 3
+  grad_clip_norm: 1.0
+  loss_weights:
+    "1": 1.0
+    "2": 1.0
+    "3": 1.0
+    "4": 1.0
+  loss_warmup:
+    enabled: false
+    full_weight_fraction_by_horizon:
+      "2": 0.10
+      "3": 0.20
+      "4": 0.30
+
+eval:
+  future_metrics_sequence_count: 4096
+  acceptance_prefix_count: 256
+  acceptance_prefix_len: 512
+  acceptance_max_new_tokens: 64
+  bootstrap_samples: 1000
+  bootstrap_seed: 2026

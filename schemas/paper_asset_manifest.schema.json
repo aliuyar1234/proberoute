@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PaperAssetManifest",
+  "type": "object",
+  "required": ["figures", "tables", "appendix"],
+  "properties": {
+    "figures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "path", "source_path"],
+        "properties": {
+          "name": {"type": "string"},
+          "path": {"type": "string"},
+          "source_path": {"type": "string"},
+          "caption": {"type": ["string", "null"]}
+        },
+        "additionalProperties": true
+      }
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "path", "source_path"],
+        "properties": {
+          "name": {"type": "string"},
+          "path": {"type": "string"},
+          "source_path": {"type": "string"},
+          "caption": {"type": ["string", "null"]}
+        },
+        "additionalProperties": true
+      }
+    },
+    "appendix": {"type": "array", "items": {"type": "object"}}
+  },
+  "additionalProperties": true
+}
