@@ -15,13 +15,6 @@ This repository implements a full research pipeline around that idea. The method
 - dense and sparse layer-mixing baselines
 - evaluation, result registries, and paper asset generation
 
-## What Is Not Shipped Here
-- pretrained model weights
-- dataset payloads
-- local run outputs
-- generated paper drafts
-- session handoff and internal adjudication notes
-
 ## Repository Layout
 - `src/`: implementation code
 - `configs/`: experiment entrypoints
