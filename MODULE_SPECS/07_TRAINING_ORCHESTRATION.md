@@ -2,7 +2,7 @@
 
 ## Objective
 
-Define the authoritative training, checkpointing, validation, and run-control contract after the GPT Pro adjudication pass.
+Define the authoritative training, checkpointing, validation, and run-control contract.
 
 ## Required behavior
 

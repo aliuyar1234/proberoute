@@ -17,4 +17,4 @@
 {"text": "a confirmatory run can be smaller if the main budget is tight"}
 {"text": "plots and tables must always come from canonical registries not terminal logs"}
 {"text": "the final paper should contain only evidence backed by saved artifacts"}
-{"text": "codex should follow the package literally and log any necessary assumptions"}
+{"text": "the implementation should follow the package literally and log any necessary assumptions"}

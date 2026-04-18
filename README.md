@@ -1,113 +1,86 @@
-# ProbeRoute
+# ProbeRoute: Probes as Routing Priors for Frozen-Backbone Multi-Token Prediction
 
-[![Paper PDF](https://img.shields.io/badge/Paper-PDF-B31B1B.svg)](https://github.com/aliuyar1234/proberoute/raw/main/ProbeRoute_paper.pdf)
-[![DOI](https://zenodo.org/badge/1181792664.svg)](https://doi.org/10.5281/zenodo.19022709)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.9-ee4c2c.svg)](https://pytorch.org/)
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](ENVIRONMENT.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f.svg)](LICENSE)
+[![Paper PDF](https://img.shields.io/badge/Paper-PDF-B31B1B?style=flat-square&logo=adobeacrobatreader&logoColor=white)](ProbeRoute_paper.pdf)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19022709-0A7BBB?style=flat-square)](https://doi.org/10.5281/zenodo.19022709)
+[![Manuscript Source](https://img.shields.io/badge/LaTeX-source-1D4ED8?style=flat-square&logo=latex&logoColor=white)](paper/incoming_latex/main.tex)
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](pyproject.toml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f?style=flat-square)](LICENSE)
+[![Scope](https://img.shields.io/badge/Scope-Frozen--Backbone%20MTP-5B4B8A?style=flat-square)](#scope)
 
-ProbeRoute studies a focused question in frozen-backbone language model adaptation: can future-token probes be turned into a useful routing prior for multi-token prediction?
+Ali Uyar
+Independent Researcher
 
-This repository implements a full research pipeline around that idea. The ProbeRoute method probes horizon-specific signal across transformer depth, uses those probe scores to initialize sparse layer routing, and trains lightweight multi-token heads on top of a frozen pretrained backbone.
+**Paper title:** *ProbeRoute: Probes as Routing Priors for Frozen-Backbone Multi-Token Prediction*
 
-## Why This Repo Exists
-- To test whether probe-informed sparse routing can outperform simpler frozen-backbone baselines for multi-token prediction.
-- To provide a reproducible implementation of the full workflow: data preparation, probe training, MTP training, evaluation, registry assembly, and paper-asset generation.
-- To keep the public codebase clean and useful: implementation, configs, tests, and stable design docs are versioned; runtime outputs and internal project-management material are not.
+This repository accompanies a methods paper on adapting a frozen autoregressive language model for explicit multi-token prediction. The central question is sharper than a generic "better adapter" claim: does probe-initialized sparse routing improve frozen-backbone multi-token prediction relative to the strongest dense baseline selected under the same screening and final-rerun protocol? ProbeRoute probes every layer for future-token predictability, uses the resulting scores to initialize a sparse per-horizon router, and trains lightweight multi-token heads on top of the frozen backbone.
 
-## What Is In Scope
-- frozen-backbone multi-token prediction
-- probe sweeps over hidden-state depth
-- dense and sparse layer-mixing baselines
-- evaluation, result registries, and paper asset generation
+## Abstract
+
+Frozen autoregressive language models are trained for next-token prediction, but their hidden states can still encode information about several future tokens. ProbeRoute tests whether that latent structure can be converted into a better explicit multi-token adapter without unfreezing the backbone. The method first runs a one-time offline probe stage across depth, then uses probe-derived top-5 scores to initialize a sparse top-*m* router over frozen hidden states. Under a stage-gated protocol with mandatory probes, screening baselines, a finalist-selection step, and a final 1B rerun, the resulting sparse adapter beats the strongest selected dense frozen-backbone baseline on the paper's two headline held-out metrics. On the final 1B comparison, ProbeRoute improves test top-1 (h2-4) from 0.1162 to 0.1172 and the speculative draft acceptance proxy from 1.1110 to 1.1188, while changing test NLL (h1-4) only from 5.3769 to 5.3780. Probe heatmaps reveal horizon-dependent depth structure at both 410M and 1B, the learned sparse router concentrates mass on the same depth bands, and the random-initialization ablation is weaker than probe-initialized sparse routing. By contrast, loss warmup and deeper far-horizon heads do not improve over the base sparse configuration at the tested budget. In this frozen-backbone setting, future-token probes are not merely descriptive diagnostics; they are a useful routing prior for explicit multi-token prediction.
+
+## Main Result
+
+The final 1B comparison at the 50M-token budget — both finalists using probe-derived initialization — is the paper's central quantitative result:
+
+| Model              | Test top-1 (h2-4) | Test accept len. | Test NLL (h1-4) |
+| ------------------ | ----------------- | ---------------- | --------------- |
+| Dense finalist     | 0.1162            | 1.1110           | **5.3769**      |
+| ProbeRoute (ours)  | **0.1172**        | **1.1188**       | 5.3780          |
+| Delta (sparse-dense) | +0.00099        | +0.00781         | +0.00110        |
+
+The raw deltas are small but directionally consistent: top-1 improves at every horizon, the speculative draft acceptance proxy improves, and aggregate NLL changes only minimally (about 0.02% relative). The practical point is stronger than the raw magnitude — the gain comes from a more *selective* routing interface, not from a heavier backbone adaptation recipe. The random-init ablation weakens the sparse model; loss warmup and deeper far-horizon heads do not improve over the base sparse configuration at the tested budget.
+
+## Contributions
+
+1. We show that future-token probe heatmaps reveal horizon-dependent depth structure at both 410M and 1B, with shorter horizons peaking later and farther horizons shifting earlier in depth.
+2. We turn those probe measurements into a concrete frozen-backbone adapter — a sparse top-*m* layer router initialized from probe top-5 scores — and evaluate it against screening-selected last-layer and dense weighted-hidden-state baselines.
+3. We find that the final 1B sparse run beats the strongest selected dense baseline on held-out future-token top-1 and speculative-draft acceptance metrics while relying on a more selective routing interface, and the random-init ablation is the one that meaningfully weakens the result.
+
+## Scope
+
+This study is deliberately focused.
+
+- one frozen-backbone setting; the backbone is never unfrozen
+- two scales: 410M for probes and screening diagnostics, 1B for the final comparison
+- one final-budget comparison against a screening-selected dense finalist, not a broad sweep
+- explicit multi-token prediction with held-out top-1 and speculative-draft acceptance as the headline metrics
+
+It does *not* claim that sparse routing universally dominates dense routing, that frozen adapters beat full finetuning, or that the acceptance proxy is a throughput benchmark.
+
+## Paper
+
+- Compiled PDF: [`ProbeRoute_paper.pdf`](ProbeRoute_paper.pdf)
+- LaTeX source: [`paper/incoming_latex/main.tex`](paper/incoming_latex/main.tex)
+- Figures and tables: [`paper/figures/`](paper/figures/), [`paper/tables/`](paper/tables/), [`paper/appendix/`](paper/appendix/)
+- TMLR submission archive: [`paper/layermix_mtp_paper_tmlr_source.zip`](paper/layermix_mtp_paper_tmlr_source.zip)
 
 ## Repository Layout
-- `src/`: implementation code
-- `configs/`: experiment entrypoints
-- `tests/`: unit and integration tests
-- `fixtures/`: offline smoke-test data
-- `schemas/`: result and manifest schemas
-- `MODULE_SPECS/`: contributor-facing module contracts
-- `PAPER_TEMPLATES/`: manuscript templates and paper asset specs
 
-## Reader's Guide
-If you only read a few files, read these:
-- [README.md](README.md)
-- [ARCHITECTURE.md](ARCHITECTURE.md)
-- [ENVIRONMENT.md](ENVIRONMENT.md)
-- [DATA_SPEC.md](DATA_SPEC.md)
-- [RESULTS_SCHEMA.md](RESULTS_SCHEMA.md)
+- [`src/`](src/) — implementation code: probes, sparse routing, MTP heads, training, evaluation
+- [`configs/`](configs/) — experiment entrypoints (smoke, screening, final-budget runs)
+- [`schemas/`](schemas/) — result and manifest schemas
+- [`fixtures/`](fixtures/) — offline smoke-test data
+- [`tests/`](tests/) — unit and integration tests
+- [`paper/`](paper/) — manuscript source, figures, tables, and compiled PDF
+- [`outputs/`](outputs/) — run outputs (gitignored; local only)
+
+## Reproducibility
+
+- [`ARCHITECTURE.md`](ARCHITECTURE.md) — system architecture and data flow
+- [`DATA_SPEC.md`](DATA_SPEC.md) — data formats and preparation contracts
+- [`ENVIRONMENT.md`](ENVIRONMENT.md) — pinned runtime environment
+- [`RESULTS_SCHEMA.md`](RESULTS_SCHEMA.md) — structure of run outputs and registries
+- [`MODULE_SPECS/`](MODULE_SPECS/) — contributor-facing module contracts
+- [`CITATION.cff`](CITATION.cff) — citation metadata
 
 ## Citation
-If you use ProbeRoute in research, please cite the repository via the GitHub citation panel or the Zenodo DOI:
 
-- DOI: `10.5281/zenodo.19022709`
-- Citation metadata: [CITATION.cff](CITATION.cff)
-
-## Quick Start
-Create an environment:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python -m pip install --upgrade pip setuptools wheel
-.\.venv\Scripts\python -m pip install --upgrade -r requirements-torch-cu128.txt
-.\.venv\Scripts\python -m pip install -r requirements.txt
-.\.venv\Scripts\python -m pip install -r requirements-dev.txt
+```bibtex
+@software{uyar2026proberoute,
+  author  = {Uyar, Ali},
+  title   = {ProbeRoute: Probes as Routing Priors for Frozen-Backbone Multi-Token Prediction},
+  year    = {2026},
+  doi     = {10.5281/zenodo.19022709},
+  url     = {https://github.com/aliuyar1234/proberoute}
+}
 ```
-
-Run the offline smoke path:
-
-```powershell
-python -m src.cli.prepare_data --config configs/smoke_local_tiny.yaml
-python -m src.cli.train_probes --config configs/smoke_local_tiny.yaml
-python -m src.cli.train_mtp --config configs/smoke_local_tiny.yaml
-python -m src.cli.evaluate --run-dir outputs/runs/SMOKE_LOCAL_TINY/local-toy-gpt/seed_1337
-```
-
-Run tests:
-
-```powershell
-python -m pytest tests/unit tests/integration
-```
-
-## Main Commands
-Train probes:
-
-```powershell
-python -m src.cli.train_probes --config configs/probe_1b.yaml
-```
-
-Train an MTP run:
-
-```powershell
-python -m src.cli.train_mtp --config configs/screen_sparse_probe_init_1b.yaml
-```
-
-Evaluate a finished run:
-
-```powershell
-python -m src.cli.evaluate --run-dir <run_dir>
-```
-
-Assemble registries:
-
-```powershell
-python -m src.cli.collect_results --outputs-root outputs
-```
-
-Build paper assets:
-
-```powershell
-python -m src.cli.build_paper_assets --outputs-root outputs
-```
-
-Write a draft from artifacts:
-
-```powershell
-python -m src.cli.write_paper --outputs-root outputs --template PAPER_TEMPLATES/PAPER_TEMPLATE.md
-```
-
-## Notes On Reproducibility
-- The canonical runtime is a local `.venv`.
-- Generated outputs live under `outputs/` and are intentionally not versioned in this public repository.
-- The public repository is meant to expose clean code and reproducible structure, not local experiment state.

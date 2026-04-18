@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This file defines the authoritative artifact layout after the GPT Pro adjudication pass. The key distinction is:
+This file defines the authoritative artifact layout. The key distinction is:
 
 - `run_registry.csv` is operational history.
 - scientific registries and paper assets may contain only authoritative evidence.
