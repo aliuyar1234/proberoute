@@ -1,7 +1,7 @@
 # ProbeRoute: Probes as Routing Priors for Frozen-Backbone Multi-Token Prediction
 
 [![Paper PDF](https://img.shields.io/badge/Paper-PDF-B31B1B?style=flat-square&logo=adobeacrobatreader&logoColor=white)](ProbeRoute_paper.pdf)
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19022709-0A7BBB?style=flat-square)](https://doi.org/10.5281/zenodo.19022709)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19022708-0A7BBB?style=flat-square)](https://doi.org/10.5281/zenodo.19022708)
 [![Manuscript Source](https://img.shields.io/badge/LaTeX-source-1D4ED8?style=flat-square&logo=latex&logoColor=white)](paper/incoming_latex/main.tex)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-2ea44f?style=flat-square)](LICENSE)
@@ -80,7 +80,7 @@ It does *not* claim that sparse routing universally dominates dense routing, tha
   author  = {Uyar, Ali},
   title   = {ProbeRoute: Probes as Routing Priors for Frozen-Backbone Multi-Token Prediction},
   year    = {2026},
-  doi     = {10.5281/zenodo.19022709},
+  doi     = {10.5281/zenodo.19022708},
   url     = {https://github.com/aliuyar1234/proberoute}
 }
 ```
